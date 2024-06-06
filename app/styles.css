@@ -1,13 +1,15 @@
-
 .pagination {
-  display: inline-block;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0;
 }
 
 .pagination button {
   color: black;
-  float: left;
   padding: 8px 16px;
-  text-decoration: none;
+  cursor: pointer;
+  margin: 0 2px;
 }
 
 .pagination button.active {
@@ -20,3 +22,17 @@
   background-color: #ddd;
   border-radius: 5px;
 }
+ 
+.post {
+  padding: 16px;
+  margin-bottom: 16px;
+  border-radius: 5px;
+}
+
+.post hr {
+  margin: 20px 0;
+  border: none;
+  border-top: 1px solid #ccc;
+}
+
+

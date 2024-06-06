@@ -1,9 +1,11 @@
 "use client";
-import Head from "next/head";
 import React from "react";
 import { useState , useEffect} from 'react';
 import axios from 'axios';
 import Pagination from './pagination'
+
+
+
 const POSTS_PER_PAGE: number = 10;
 const NOTES_URL:string = 'http://localhost:3001/notes';
 
@@ -23,10 +25,6 @@ interface Page {
   notes: Note[];
 }
 
-interface Pages {
-  pages: Page[];
-}
-
 interface PaginationProps {
   activePage: number;
   numOfPages: number;
@@ -41,12 +39,9 @@ interface HandleProps {
 function PostsTable({ notes }: Page) {
   return (
     <>
-      <Head>
-        <title>Notes Page</title>
-      </Head>
       <main className="min-h-screen p-24">
-        <header className="text-3xl font-bold mb-8">
-          Notes Page
+        <header className="text-3xl font-bold mb-8 text-center">
+            Notes Page
         </header>
       <div className="grid grid-cols-2 gap-4 ">
           <Post notes={notes} />
@@ -58,28 +53,24 @@ function PostsTable({ notes }: Page) {
 
 function Post({ notes }: Page) {
   return (
-    <div>
+    <>
       {notes.map((note) => (
-        <div key={note.id} className="note">
+        <div className="post" id={note.id.toString()} >
           <h2>{note.title}</h2>
-          <p>{note.author.name}</p>
-          <p>{note.author.email}</p>
+          <small>By : {note.author.name}</small>
+          <br />
+          <small> {note.author.email}</small>
           <p>{note.content}</p>
-          <hr
-            style={{
-              margin: "20px 0",
-              border: "none",
-              borderTop: "1px solid #ccc",
-            }}
-          />
+          <hr />
         </div>
       ))}
-    </div>
+    </>
   );
 }
 
 
 export default function Home() {
+
   const [currentNotes, setCurrentNotes] = useState([]);
   const [activePage, setActivePage] = useState(1);
   const [numOfPages, setNumOfPages] = useState(1);
@@ -97,12 +88,13 @@ export default function Home() {
       setNumOfPages(totalPagesCount);
       setCurrentNotes(response.data);
     }).catch(error => { console.log("Encountered an error:" + error)});
-});
+  });
+  
   return (
-  <div>
-     <PostsTable notes={currentNotes} />
+  <>
+     <PostsTable notes = {currentNotes} />
      <Pagination activePage = {activePage} numOfPages = {numOfPages} setActivePage = {setActivePage}/>
-  </div>
+  </>
   );
 
 }
