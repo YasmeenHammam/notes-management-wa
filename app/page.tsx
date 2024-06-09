@@ -88,7 +88,7 @@ export default function Home() {
       setNumOfPages(totalPagesCount);
       setCurrentNotes(response.data);
     }).catch(error => { console.log("Encountered an error:" + error)});
-  });
+  }, [activePage]);
   
   return (
   <>
