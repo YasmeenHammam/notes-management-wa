@@ -16,6 +16,19 @@ We will implement a simple front-end app that shows user posts. The app uses a J
 7. Fill in repository details in (Moodle's "הגשה מטלה 1").
 8. Use Typescript.
 9. The ex1 forum is open for questions in Moodle.
+10. Git repository content:
+    1. Aim for a minimal repository size that can be cloned and installed:  most of the files in github should be code and package dependencies (package.json).
+    2. Don't submit node_modules dir, .next project dir, json creation script, or json files.
+11. If a certain case is not described here, you're free to code it as you see fit.
+
+## Code
+1. We haven't got to server side coding yet, in the meanwhile, you should add
+    ```js
+      "use client";
+    ```
+    to your topmost component, to signal react that this component tree is rendered by the client: [link](https://react.dev/reference/rsc/use-client) 
+2. Won't be tested: aim for short components, there's no hard rule of how many. See [this discussion](https://stackoverflow.com/questions/75380858/how-to-deal-with-a-huge-number-of-components-in-a-page-in-react#:~:text=After%20a%20few%20years%20working,ll%20be%20hard%20to%20read.).
+3. Won't be tested: see Airbnb's [coding style document](https://airbnb.io/javascript/react/).
 
 ## AI
 Recommendation about using an AI assistant: You can ask questions and read the answers, but never copy them. Understand the details but write the code from memory. If two people copy the same AI code, it will be considered plagiarism.
