@@ -1,0 +1,35 @@
+const mongoose = require("mongoose");
+
+mongoose.set("strictQuery", false);
+
+const url = `mongodb+srv://hammamya:yasmeen2203@cluster0.wotmhza.mongodb.net/`;
+
+console.log("connecting to", url);
+mongoose
+  .connect(url)
+  .then((result) => {
+    console.log("connected to MongoDB");
+  })
+  .catch((error) => {
+    console.log("error connecting to MongoDB:", error.message);
+  });
+
+const noteSchema = new mongoose.Schema({
+    id: Number,
+  title: String,
+  author: {
+    name: String,
+    email: String,
+  },
+  content: String,
+});
+
+noteSchema.set("toJSON", {
+  transform: (document, returnedObject) => {
+    returnedObject.id = returnedObject.id.toString();
+    delete returnedObject._id;
+    delete returnedObject.__v;
+  },
+});
+
+module.exports = mongoose.model("Note", noteSchema);
