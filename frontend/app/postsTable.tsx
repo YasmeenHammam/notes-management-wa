@@ -7,9 +7,42 @@ import { ThemeContext } from './theme';
 
 export default function PostsTable({ notes, refreshData }: Page) {
     const [newContent, setNewContent] = useState('');
+    const [isAdding, setIsAdding] = useState(false);
     const theme = useContext(ThemeContext);
     const themeClass = theme == 'light' ? 'lightThemeStyle' : 'darkThemeStyle';
-
+    let addButton;
+    if (isAdding) {
+        addButton = (
+        <>
+        <input name = 'text_input_new_note'
+                    type='text'
+                    value={newContent}
+                    onChange={(e) => {
+                        setNewContent(e.target.value);
+                    }}
+                />
+                <>
+                <button name={`text_input_save_new_note`}
+                    onClick={async () => {
+                        handleAddClick();
+                        setIsAdding(false);
+                    }}>Save</button>
+                    </>
+                    <>
+                <button name={`text_input_cancel_new_note`}
+                    onClick={() => {
+                        setNewContent('');
+                        setIsAdding(false);
+                    }}> Cancel</button>
+                </>
+                </>
+            
+        )
+    }else {
+        addButton = <button name={`add_new_note`} onClick={() => {
+            setIsAdding(true) 
+        }}>Add new note</button>
+    }
 
     const handleAddClick = async (): Promise<void> => {
         try {
@@ -48,18 +81,9 @@ export default function PostsTable({ notes, refreshData }: Page) {
                     Notes Page
                 </header>
                 <div >
-                    <input
-                        type='text'
-                        value={newContent}
-                        onChange={(e) => {
-                            setNewContent(e.target.value);
-                        }}
-                    />
+
                     <div className="add-button">
-                        <button name="add_new_note"
-                            onClick={() => {
-                                handleAddClick();
-                            }}>Add new note</button></div>
+                        {addButton}</div>
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                     {notes.map((note) => (
