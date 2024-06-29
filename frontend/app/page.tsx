@@ -18,22 +18,27 @@ export default function Home() {
   const [activePage, setActivePage] = useState(1);
   const [numOfPages, setNumOfPages] = useState(1);
 
+  const refreshData = async () => {
+    const response = await axios.get(NOTES_URL, {
+      params: {
+        activePage,
+        postsPerPage: POSTS_PER_PAGE
+      }
+    })
+    const totalCount = response.data.count;
+    const totalPagesCount: number = Math.ceil(totalCount / POSTS_PER_PAGE);
+    setNumOfPages(totalPagesCount);
+    setCurrentNotes(response.data.notes);
 
+  }
   useEffect(() => {
-    const promise = axios.get(NOTES_URL)
-
-    promise.then(response => {
-      const totalCount = response.data.length;
-      const totalPagesCount: number = Math.ceil(totalCount / POSTS_PER_PAGE);
-      setNumOfPages(totalPagesCount);
-      setCurrentNotes(response.data);
-    }).catch(error => { console.log("Encountered an error:" + error) });
+    refreshData();
   }, [activePage]);
 
   return (
     <ThemeToggle>
       <>
-        <PostsTable notes={currentNotes} setCurrentNotes={setCurrentNotes} />
+        <PostsTable notes={currentNotes} setCurrentNotes={setCurrentNotes} refreshData={refreshData}  />
         <Pagination activePage={activePage} numOfPages={numOfPages} setActivePage={setActivePage} />
       </>
 
