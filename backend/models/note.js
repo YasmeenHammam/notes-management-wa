@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 mongoose.set("strictQuery", false);
 
-const url = `mongodb+srv://hammamya:yasmeen2203@cluster0.wotmhza.mongodb.net/`;
+const url = process.env['MONGODB_CONNECTION_URL'];
 
 console.log("connecting to", url);
 mongoose
