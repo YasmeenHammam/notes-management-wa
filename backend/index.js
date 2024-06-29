@@ -37,24 +37,46 @@ const unknownEndpoint = (request, response) => {
   response.status(404).send({ error: "unknown endpoint" });
 };
 
-//GET all notes.
-// TODO: all the notes or just 10?
+//GET 10 notes.
 app.get("/notes", async (request, response) => {
-  const notes = await Note.find({});
-  response.json(notes);
+  try {
+    const activePage = parseInt(request.query.activePage) || 1;
+    const postsPerPage = parseInt(request.query.postsPerPage) || 10;
+
+    const skip = (activePage - 1) * postsPerPage;
+
+    const count = await Note.countDocuments({});
+
+    const notes = await Note.find({})
+      .sort({ id: 1 })
+      .skip(skip)
+      .limit(postsPerPage);
+
+    response.json({ count, notes });
+  } catch (error) {
+    console.log(error);
+    response.status(500).json({ error: "Internal Server Error" });
+  }
 });
 
-//TODO: check every feild in the note-> V but need to check it after getting the Input.
-app.post("/notes", async (request, response) => {
-  const { id, title, author, content } = request.body;
 
-  if (!id || !title || !author || !content) {
-    response.status(400).json({ error: "Missing fields in the request" });
+app.post("/notes", async (request, response) => {
+  const { content } = request.body;
+
+  if (!content) {
+    return response.status(400).json({ error: "Missing fields in the request" });
   }
+
+  const count = await Note.countDocuments({});
+  const customId = count + 1;
+
   const note = new Note({
-    id: id,
-    title: title,
-    author: author,
+    id: customId,
+    title: `Note ${customId}`,
+    author: {
+      name: `Author ${customId}`,
+      email: `mail_${customId}@gmail.com`,
+    },
     content: content,
   });
   try {
@@ -84,54 +106,31 @@ app.get("/notes/:id", async (request, response) => {
   }
 });
 
-// TODO: DELETE the Note with id = i.
+
+// DELETE the i-th Note.
 app.delete("/notes/:id", async (request, response) => {
-  const id = request.params.id;
-  try {
-    const note = await Note.findOne({ id: id });
-    if (note) {
-      objectId = note._id;
-      const deletedNote = await Note.deleteOne({ _id: objectId });
-      if (deletedNote) {
-        response.status(204).json("Note deleted successfully");
-      } else {
-        response.status(500).json({ error: "Error deleting note" });
-      }
+  const i = request.params.id;
+
+  const notes = await Note.find({})
+    .sort({ id: 1 })
+    .skip(i - 1)
+    .limit(1);
+  const note = notes[0];
+  if (note) {
+    const deletedNote = await Note.deleteOne({ _id: note._id });
+    if (deletedNote) {
+      response.status(204).json("Note deleted successfully");
     } else {
-      response.status(404).json({ error: "Note not found" });
+      response.status(500).json({ error: "Error deleting note" });
     }
-  } catch (err) {
-    response.status(500).json({ error: "Internal Server Error" });
+  } else {
+    response.status(404).json({ error: "Note not found" });
   }
 });
-
-//TODO: DELETE the ith Note.
-// app.delete("/notes/:id", async (request, response) => {
-//   const i = request.params.id;
-
-//   const notes = await Note.find({})
-//     .sort({ id: 1 })
-//     .skip(i - 1)
-//     .limit(1);
-//   const note = notes[0];
-
-//   if (note) {
-//     // console.log(note._id);
-//     const deletedNote = await Note.deleteOne({ _id: note._id });
-//     if (deletedNote) {
-//       response.status(204).json("Note deleted successfully");
-//     } else {
-//       response.status(500).json({ error: "Error deleting note" });
-//     }
-//   } else {
-//     response.status(404).json({ error: "Note not found" });
-//   }
-// });
 
 app.put("/notes/:id", async (request, response) => {
   const i = request.params.id;
   const newContent = request.body.content;
-  console.log(newContent);
   try {
     const notes = await Note.find({})
       .sort({ id: 1 })
