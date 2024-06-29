@@ -25,11 +25,9 @@
 
 .add-button{
     display: inline-block;
-    padding: 10px 20px;
+    padding: 1px 20px;
     font-size: 16px;
-    color: #ffffff;
-    background-color: #4c0bef; 
-    border-radius: 25px; 
+    /* border-radius: 25px;  */
     cursor: pointer;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
 }
@@ -44,6 +42,33 @@
   margin: 20px 0;
   border: none;
   border-top: 1px solid #ccc;
+}
+
+.lightThemeStyle{
+  background-color: lightgray;
+  color: black;
+
+}
+
+.lightThemeStyle button{
+  background-color: black;
+  color: lightgray;
+}
+
+.lightThemeStyle input, .darkThemeStyle input{
+  color: black;
+}
+
+
+.darkThemeStyle {
+  background-color: black;
+  color: lightgray;
+
+}
+
+.darkThemeStyle button{
+  background-color: lightgray;
+  color: black;
 }
 
 
