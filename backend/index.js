@@ -128,6 +128,7 @@ app.delete("/notes/:id", async (request, response) => {
   }
 });
 
+//EDIT the i-th Note.
 app.put("/notes/:id", async (request, response) => {
   const i = request.params.id;
   const newContent = request.body.content;

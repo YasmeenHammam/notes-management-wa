@@ -27,7 +27,14 @@
     display: inline-block;
     background-color: #4c0bef;
     padding: 1px 20px;
-    
+    border-radius: 5px;
+    cursor: pointer; 
+}
+
+.add-button button{
+    display: inline-block;
+    background-color: #4c0bef;
+    padding: 1px 20px;
     border-radius: 5px;
     cursor: pointer; 
 }
@@ -51,7 +58,6 @@
 }
 
 .lightThemeStyle button{
-  background-color: black;
   color: lightgray;
 }
 
@@ -59,19 +65,11 @@
   color: black;
 }
 
-
 .darkThemeStyle {
   background-color: black;
   color: lightgray;
 
 }
-
-.darkThemeStyle button{
-  background-color: lightgray;
-  color: black;
-}
-
-
 
 .note button {
   background-color: #4c0bef;

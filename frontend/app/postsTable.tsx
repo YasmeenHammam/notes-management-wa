@@ -13,8 +13,8 @@ export default function PostsTable({ notes, refreshData }: Page) {
     let addButton;
     if (isAdding) {
         addButton = (
-        <>
-        <input name = 'text_input_new_note'
+            <>
+                <input name='text_input_new_note'
                     type='text'
                     value={newContent}
                     onChange={(e) => {
@@ -22,25 +22,25 @@ export default function PostsTable({ notes, refreshData }: Page) {
                     }}
                 />
                 <>
-                <button name={`text_input_save_new_note`}
-                    onClick={async () => {
-                        handleAddClick();
-                        setIsAdding(false);
-                    }}>Save</button>
-                    </>
-                    <>
-                <button name={`text_input_cancel_new_note`}
-                    onClick={() => {
-                        setNewContent('');
-                        setIsAdding(false);
-                    }}> Cancel</button>
+                    <button name="text_input_save_new_note"
+                        onClick={async () => {
+                            handleAddClick();
+                            setIsAdding(false);
+                        }}>Save</button>
                 </>
+                <>
+                    <button name="text_input_cancel_new_note"
+                        onClick={() => {
+                            setNewContent('');
+                            setIsAdding(false);
+                        }}> Cancel</button>
                 </>
-            
+            </>
+
         )
-    }else {
-        addButton = <button name={`add_new_note`} onClick={() => {
-            setIsAdding(true) 
+    } else {
+        addButton = <button name="add_new_note" onClick={() => {
+            setIsAdding(true)
         }}>Add new note</button>
     }
 
@@ -76,18 +76,20 @@ export default function PostsTable({ notes, refreshData }: Page) {
 
     return (
         <>
-            <main className={`min-h-screen p-24 ${themeClass}`} >
+            <main className={`min-h-screen p-4 ${themeClass}`} >
                 <header className="text-3xl font-bold mb-8 text-center">
                     Notes Page
                 </header>
                 <div >
-
                     <div className="add-button">
-                        {addButton}</div>
+                        {addButton}
+                    </div>
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                     {notes.map((note) => (
-                        <Post note={note} handleDeleteNote={handleDeleteNote} handleEditNote={handleEditNote} />
+                        <div key={note.id.toString()}>
+                            <Post note={note} handleDeleteNote={handleDeleteNote} handleEditNote={handleEditNote} />
+                        </div>
                     ))}
                 </div>
             </main>

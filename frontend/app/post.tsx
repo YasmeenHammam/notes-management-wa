@@ -45,7 +45,7 @@ export default function Post({ note, handleDeleteNote, handleEditNote }: PostPro
     }
     return (
         <>
-            <div className="note" id={note.id.toString()} >
+            <div className="note" id={note.id.toString()}  >
                 <h2>{note.title}</h2>
                 <small>By : {note.author.name}</small>
                 <br />

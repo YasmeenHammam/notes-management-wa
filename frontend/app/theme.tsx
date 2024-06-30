@@ -7,12 +7,14 @@ export default function ThemeToggle({ children }: ChildrenType) {
     const [theme, setTheme] = useState('light');
     return (
         <ThemeContext.Provider value={theme}>
+            <div className='changeTheme'>
                 <button
                     name='change_theme'
                     onClick={() => {
                         setTheme(prevTheme => prevTheme == 'light' ? 'dark' : 'light')
                 }}
-            >chnage theme</button>
+                >chnage theme</button>
+            </div>
             {children}
         </ThemeContext.Provider>
     )
