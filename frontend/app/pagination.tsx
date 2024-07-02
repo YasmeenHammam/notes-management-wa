@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState  } from 'react';
 import './styles.css';
+import axios from 'axios';
 
 interface PaginationProps {
     activePage: number;
@@ -8,7 +9,7 @@ interface PaginationProps {
   }
 
 export default function Pagination({ activePage, numOfPages ,setActivePage} : PaginationProps) {
-   
+
     const getPageRange = (): number[] => {
         if (numOfPages <= 5) {
             return Array.from({ length: numOfPages }, (_, i) => i + 1);
@@ -25,7 +26,10 @@ export default function Pagination({ activePage, numOfPages ,setActivePage} : Pa
         setActivePage(pageNumber);
     };
 
+ 
+
     return (
+        <>
         <div className="pagination">
             <button name = "first" onClick={() => handlePageClick(1)} disabled={activePage === 1}>First</button>
             <button name = "previous" onClick={() => handlePageClick(activePage - 1)} disabled={activePage === 1}>Prev</button>
@@ -35,7 +39,9 @@ export default function Pagination({ activePage, numOfPages ,setActivePage} : Pa
                 ))}
             </>
             <button name = "next" onClick={() => handlePageClick(activePage + 1)} disabled={activePage === numOfPages}>Next</button>
-            <button name = "last" onClick={() => handlePageClick(numOfPages)} disabled={activePage === numOfPages}>Last</button>
-        </div>
+            <button name="last" onClick={() => handlePageClick(numOfPages)} disabled={activePage === numOfPages}>Last</button>
+            
+            </div>
+        </>
     );
 };
