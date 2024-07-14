@@ -91,13 +91,14 @@ app.post("/notes", async (request, response) => {
 app.get("/notes/:id", async (request, response) => {
   const i = request.params.id;
   try {
-    const note = await Note.find({})
+    const notes = await Note.find({})
       .sort({ id: 1 })
       .skip(i - 1)
       .limit(1);
+    const note = notes[0];
+
     if (note) {
       response.json(note);
-      response.status(204).end();
     } else {
       response.status(404).json({ error: "Note not found" });
     }
@@ -116,6 +117,7 @@ app.delete("/notes/:id", async (request, response) => {
     .skip(i - 1)
     .limit(1);
   const note = notes[0];
+  
   if (note) {
     const deletedNote = await Note.deleteOne({ _id: note._id });
     if (deletedNote) {
@@ -146,7 +148,7 @@ app.put("/notes/:id", async (request, response) => {
       );
 
       if (updatedNote) {
-        response.status(204).json(updatedNote);
+        response.status(200).json(updatedNote);
       } else {
         response.status(500).json({ error: "Error updating note" });
       }
