@@ -63,7 +63,7 @@ app.get("/notes", async (request, response) => {
 app.post("/notes", async (request, response) => {
   const { content } = request.body;
 
-  if (content == undefined || content == null) {
+  if (content == undefined || content == null || typeof content != "string") {
     return response
       .status(400)
       .json({ error: "Missing fields in the request" });
@@ -140,7 +140,7 @@ app.put("/notes/:id", async (request, response) => {
   const i = request.params.id;
   const newContent = request.body.content;
 
-  if (newContent == undefined || newContent == null) {
+  if (newContent == undefined || newContent == null || typeof newContent != "string") {
     return response
       .status(400)
       .json({ error: "Missing fields in the request" });
