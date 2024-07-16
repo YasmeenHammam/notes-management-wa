@@ -52,7 +52,7 @@ app.get("/notes", async (request, response) => {
       .skip(skip)
       .limit(postsPerPage);
 
-    response.json({ count, notes });
+    response.status(200).json({ count, notes });
   } catch (error) {
     console.log(error);
     response.status(500).json({ error: "Internal Server Error" });
@@ -63,10 +63,14 @@ app.get("/notes", async (request, response) => {
 app.post("/notes", async (request, response) => {
   const { content } = request.body;
 
-  if (content == undefined || content == null || typeof content != "string") {
+  if (
+    content === undefined ||
+    content === null ||
+    typeof content !== "string"
+  ) {
     return response
       .status(400)
-      .json({ error: "Missing fields in the request" });
+      .json({ error: "Missing or Wrong fields in the request" });
   }
 
   const count = await Note.countDocuments({});
@@ -140,10 +144,14 @@ app.put("/notes/:id", async (request, response) => {
   const i = request.params.id;
   const newContent = request.body.content;
 
-  if (newContent == undefined || newContent == null || typeof newContent != "string") {
+  if (
+    newContent === undefined ||
+    newContent === null ||
+    typeof newContent !== "string"
+  ) {
     return response
       .status(400)
-      .json({ error: "Missing fields in the request" });
+      .json({ error: "Missing or Wrong fields in the request" });
   }
 
   try {
