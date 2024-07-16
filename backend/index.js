@@ -59,12 +59,14 @@ app.get("/notes", async (request, response) => {
   }
 });
 
-
+// POST new note
 app.post("/notes", async (request, response) => {
   const { content } = request.body;
 
-  if (!content) {
-    return response.status(400).json({ error: "Missing fields in the request" });
+  if (content == undefined || content == null) {
+    return response
+      .status(400)
+      .json({ error: "Missing fields in the request" });
   }
 
   const count = await Note.countDocuments({});
@@ -98,7 +100,7 @@ app.get("/notes/:id", async (request, response) => {
     const note = notes[0];
 
     if (note) {
-      response.json(note);
+      response.status(200).json(note);
     } else {
       response.status(404).json({ error: "Note not found" });
     }
@@ -107,26 +109,29 @@ app.get("/notes/:id", async (request, response) => {
   }
 });
 
-
 // DELETE the i-th Note.
 app.delete("/notes/:id", async (request, response) => {
   const i = request.params.id;
 
-  const notes = await Note.find({})
-    .sort({ id: 1 })
-    .skip(i - 1)
-    .limit(1);
-  const note = notes[0];
-  
-  if (note) {
-    const deletedNote = await Note.deleteOne({ _id: note._id });
-    if (deletedNote) {
-      response.status(204).json("Note deleted successfully");
+  try {
+    const notes = await Note.find({})
+      .sort({ id: 1 })
+      .skip(i - 1)
+      .limit(1);
+    const note = notes[0];
+
+    if (note) {
+      const deletedNote = await Note.deleteOne({ _id: note._id });
+      if (deletedNote) {
+        response.status(204).json("Note deleted successfully");
+      } else {
+        response.status(500).json({ error: "Error deleting note" });
+      }
     } else {
-      response.status(500).json({ error: "Error deleting note" });
+      response.status(404).json({ error: "Note not found" });
     }
-  } else {
-    response.status(404).json({ error: "Note not found" });
+  } catch {
+    response.status(500).json({ error: "Internal Server Error" });
   }
 });
 
@@ -134,6 +139,13 @@ app.delete("/notes/:id", async (request, response) => {
 app.put("/notes/:id", async (request, response) => {
   const i = request.params.id;
   const newContent = request.body.content;
+
+  if (newContent == undefined || newContent == null) {
+    return response
+      .status(400)
+      .json({ error: "Missing fields in the request" });
+  }
+
   try {
     const notes = await Note.find({})
       .sort({ id: 1 })
