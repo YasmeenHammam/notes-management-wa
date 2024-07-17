@@ -31,3 +31,15 @@ export interface Note {
     author: Author;
     content: string;
 }
+
+export interface User {
+    name: string,
+    email: string,
+    username: string, 
+    password : string
+}
+
+export interface Credentials{
+    username: string,
+    password: string
+}

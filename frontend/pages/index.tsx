@@ -1,12 +1,15 @@
 "use client";
 import React from "react";
-import { useState, useEffect, useReducer } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
-import Pagination from './pagination'
-import PostsTable from './postsTable'
-import './styles.css';
-import { Note } from "./types";
-import ThemeToggle from './theme';
+import Pagination from '../components/pagination'
+import PostsTable from '../components/postsTable'
+import '../styles/style.css';
+import { Note } from "../components/types";
+import ThemeToggle from '../components/theme';
+import Register from '../components/createUser'
+import Login from '../components/login'
+
 
 
 
@@ -17,6 +20,8 @@ export default function Home() {
   const [currentNotes, setCurrentNotes] = useState<Note[]>([]);
   const [activePage, setActivePage] = useState(1);
   const [numOfPages, setNumOfPages] = useState(1);
+
+
 
   const refreshData = async () => {
     const response = await axios.get(NOTES_URL, {
@@ -40,6 +45,9 @@ export default function Home() {
       <>
         <PostsTable notes={currentNotes} setCurrentNotes={setCurrentNotes} refreshData={refreshData}  />
         <Pagination activePage={activePage} numOfPages={numOfPages} setActivePage={setActivePage} />
+        <Register />
+        <Login />
+        
       </>
 
     </ThemeToggle>

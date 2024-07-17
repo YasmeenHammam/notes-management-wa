@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { PostProps } from "./types";
-import './styles.css';
+import '../styles/style.css';
 
 export default function Post({ note, handleDeleteNote, handleEditNote }: PostProps) {
     const [isEditing, setIsEditing] = useState(false);

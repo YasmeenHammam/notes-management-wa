@@ -1,6 +1,6 @@
 import { useContext, useState } from 'react';
 import axios from 'axios';
-import Post from "./post"
+import Post from "../components/post"
 import { Note, Page } from './types';
 import { ThemeContext } from './theme';
 

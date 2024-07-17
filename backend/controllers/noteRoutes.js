@@ -5,7 +5,6 @@ const Note = require("../models/note");
 const { request } = require("http");
 
 
-
 //GET 10 notes.
 noteRouter.get("/", async (request, response) => {
   try {

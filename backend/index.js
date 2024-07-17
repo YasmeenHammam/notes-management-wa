@@ -29,10 +29,14 @@ const unknownEndpoint = (request, response) => {
 app.use(cors());
 
 const notesRouter = require("./controllers/noteRoutes");
+const usersRouter = require("./controllers/users");
+const loginRouter = require("./controllers/login");
 
 app.use(express.json());
 app.use(requestLogger);
 app.use("/notes", notesRouter);
+app.use("/users", usersRouter);
+app.use("/login", loginRouter);
 
 app.use(unknownEndpoint);
 
