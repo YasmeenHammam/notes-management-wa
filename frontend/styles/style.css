@@ -23,22 +23,22 @@
   border-radius: 5px;
 }
 
-.add-button{
-    display: inline-block;
-    background-color: #4c0bef;
-    padding: 1px 20px;
-    border-radius: 5px;
-    cursor: pointer; 
+.add-button {
+  display: inline-block;
+  background-color: #4c0bef;
+  padding: 1px 20px;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
-.add-button button{
-    display: inline-block;
-    background-color: #4c0bef;
-    padding: 1px 20px;
-    border-radius: 5px;
-    cursor: pointer; 
+.add-button button {
+  display: inline-block;
+  background-color: #4c0bef;
+  padding: 1px 20px;
+  border-radius: 5px;
+  cursor: pointer;
 }
- 
+
 .note {
   padding: 16px;
   margin-bottom: 16px;
@@ -51,17 +51,18 @@
   border-top: 1px solid #ccc;
 }
 
-.lightThemeStyle{
+.lightThemeStyle {
   background-color: lightgray;
   color: black;
 
 }
 
-.lightThemeStyle button{
+.lightThemeStyle button {
   color: lightgray;
 }
 
-.lightThemeStyle input, .darkThemeStyle input{
+.lightThemeStyle input,
+.darkThemeStyle input {
   color: black;
 }
 
@@ -75,4 +76,16 @@
   background-color: #4c0bef;
   color: white;
   border-radius: 5px;
+}
+
+.input-login, .input-register {
+  display: block;
+  border: 1px solid black;
+}
+
+
+.create_user_form, .form-login {
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: center;
 }

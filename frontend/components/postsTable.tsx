@@ -3,6 +3,8 @@ import axios from 'axios';
 import Post from "../components/post"
 import { Note, Page } from './types';
 import { ThemeContext } from './theme';
+import CreateUser from '../components/createUser'
+import Login from '../components/login'
 
 
 export default function PostsTable({ notes, refreshData }: Page) {
@@ -80,11 +82,12 @@ export default function PostsTable({ notes, refreshData }: Page) {
                 <header className="text-3xl font-bold mb-8 text-center">
                     Notes Page
                 </header>
-                <div >
-                    <div className="add-button">
-                        {addButton}
-                    </div>
+                <CreateUser />
+                <Login />
+                <div className="add-button">
+                    {addButton}
                 </div>
+
                 <div className="grid grid-cols-2 gap-4">
                     {notes.map((note) => (
                         <div key={note.id.toString()}>

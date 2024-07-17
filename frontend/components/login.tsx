@@ -1,11 +1,11 @@
 import loginService from "../services/loginService";
 import { useState } from "react";
 
-
-export default function login() {
+export default function Login() {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [user, setUser] = useState(null)
+
     const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()
         try {
@@ -19,14 +19,15 @@ export default function login() {
             setUser(user)
             setUsername('')
             setPassword('')
-        } catch {
-        }
+        } catch { }
     }
+    
     return (
         <form onSubmit={handleLogin}>
+            <label>login</label>
             <div>
                 username
-                <input
+                <input className="input-login"
                     type="text"
                     value={username}
                     name="login_form_username"
@@ -35,7 +36,7 @@ export default function login() {
             </div>
             <div>
                 password
-                <input
+                <input className="input-login"
                     type="password"
                     value={password}
                     name="login_form_password"
