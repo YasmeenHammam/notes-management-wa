@@ -1,3 +1,9 @@
+.header {
+  font-size: 1.875rem;
+  font-weight: bold;
+  text-align: center;
+}
+
 .pagination {
   display: flex;
   justify-content: center;
@@ -31,12 +37,21 @@
   cursor: pointer;
 }
 
+.login button,
+.create button,
+.logout button,
 .add-button button {
   display: inline-block;
   background-color: #4c0bef;
-  padding: 1px 20px;
+  padding: 0.2px 5px;
   border-radius: 5px;
   cursor: pointer;
+}
+
+.notes-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
 }
 
 .note {
@@ -89,3 +104,18 @@
   gap: 1rem;
   align-items: center;
 }
+
+.forms-container {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  padding: 2rem;
+  gap: 2rem;
+}
+.form-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+

@@ -1,6 +1,9 @@
 const express = require("express");
 const noteRouter = express.Router();
 const Note = require("../models/note");
+const User = require("../models/user");
+const jwt = require("jsonwebtoken");
+const authorize = require("../controllers/authorization");
 
 const { request } = require("http");
 
@@ -26,11 +29,10 @@ noteRouter.get("/", async (request, response) => {
     response.status(500).json({ error: "Internal Server Error" });
   }
 });
-
+ 
 // POST new note
-noteRouter.post("/", async (request, response) => {
+noteRouter.post("/", authorize, async (request, response) => {
   const { content } = request.body;
-
   if (
     content === undefined ||
     content === null ||
@@ -40,24 +42,24 @@ noteRouter.post("/", async (request, response) => {
       .status(400)
       .json({ error: "Missing or Wrong fields in the request" });
   }
-
+ 
   const count = await Note.countDocuments({});
   const customId = count + 1;
-
   const note = new Note({
     id: customId,
     title: `Note ${customId}`,
     author: {
-      name: `Author ${customId}`,
-      email: `mail_${customId}@gmail.com`,
+      name: request.user.name,
+      email: request.user.email,
     },
     content: content,
   });
+
   try {
     const savedNote = await note.save();
     response.status(201).json(savedNote);
-  } catch {
-    response.status(500).json({ error: "Cannot Save Note" });
+  } catch (err) {
+    response.status(500).json({ error: "Cannot save note" });
   }
 });
 
@@ -82,7 +84,7 @@ noteRouter.get("/:id", async (request, response) => {
 });
 
 // DELETE the i-th Note.
-noteRouter.delete("/:id", async (request, response) => {
+noteRouter.delete("/:id", authorize, async (request, response) => {
   const i = request.params.id;
 
   try {
@@ -108,7 +110,7 @@ noteRouter.delete("/:id", async (request, response) => {
 });
 
 //EDIT the i-th Note.
-noteRouter.put("/:id", async (request, response) => {
+noteRouter.put("/:id", authorize, async (request, response) => {
   const i = request.params.id;
   const newContent = request.body.content;
 
@@ -147,6 +149,5 @@ noteRouter.put("/:id", async (request, response) => {
     response.status(500).json({ error: "Internal Server Error" });
   }
 });
-
 
 module.exports = noteRouter;

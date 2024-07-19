@@ -10,23 +10,22 @@ export default function CreateUser() {
     const handleCreateUser = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         try {
-            const user = await newUserService.create({
+            await newUserService.create({
                 name, email, username, password
             })
-            console.log(user);
             setUsername('');
-            setEmail('');
             setPassword('');
+            setEmail('');
             setName('');
         }
-        catch {
-
+        catch (error) {
+            console.error('Failed to create new user', error);
         }
     };
     return (
-        <div>
-            <h1>Create User</h1>
-            <form className="create_user_form" onSubmit={handleCreateUser}>
+        <div className="forms-container">
+            <b>Create User</b>
+            <form onSubmit={handleCreateUser}>
                 <div>
                     Name:
                     <input className="input-register"
@@ -63,7 +62,9 @@ export default function CreateUser() {
                         onChange={({ target }) => setPassword(target.value)}
                     />
                 </div>
-                <button className="form-button" name="create_user_form_create_user" type="submit">Create User</button>
+                <div className="create">
+                    <button name="create_user_form_create_user" type="submit">Create User</button>
+                </div>
             </form>
         </div>
     )

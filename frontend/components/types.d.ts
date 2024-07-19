@@ -8,7 +8,7 @@ export interface PostProps {
 export interface Page {
     notes: Note[];
     setCurrentNotes: React.Dispatch<React.SetStateAction<Note[]>>
-    refreshData: () => Promise<void>
+    fetchNotes: () => Promise<void>
 }
 
 export interface ThemeContextType {
