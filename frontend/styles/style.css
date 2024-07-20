@@ -32,7 +32,6 @@
 .add-button {
   display: inline-block;
   background-color: #4c0bef;
-  padding: 1px 20px;
   border-radius: 5px;
   cursor: pointer;
 }

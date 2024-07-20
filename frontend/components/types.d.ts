@@ -2,6 +2,7 @@ export interface PostProps {
     note: Note;
     handleDeleteNote: (note: Note) => void;
     handleEditNote: (note: Note) => void;
+    user: null
 
 }
 
@@ -42,4 +43,13 @@ export interface User {
 export interface Credentials{
     username: string,
     password: string
+}
+
+export interface LoginProps{
+    user: null
+    setUser: Dispatch<SetStateAction<null>>
+}
+
+export interface CreateProps{
+    user: null
 }

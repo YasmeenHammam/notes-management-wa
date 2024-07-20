@@ -4,7 +4,7 @@ import { Note, Page } from './types';
 import { ThemeContext } from './theme';
 import CreateUser from '../components/createUser'
 import Login from '../components/login'
-import noteService from '@/services/noteService';
+import noteService from '../services/noteService';
 
 
 export default function PostsTable({ notes, fetchNotes }: Page) {
@@ -12,6 +12,8 @@ export default function PostsTable({ notes, fetchNotes }: Page) {
     const [isAdding, setIsAdding] = useState(false);
     const theme = useContext(ThemeContext);
     const themeClass = theme == 'light' ? 'lightThemeStyle' : 'darkThemeStyle';
+    const [user, setUser] = useState(null)
+
     let addButton;
     if (isAdding) {
         addButton = (
@@ -46,15 +48,7 @@ export default function PostsTable({ notes, fetchNotes }: Page) {
         }}>Add new note</button>
     }
 
-    // const handleAddClick = async (): Promise<void> => {
-    //     try {
-    //         await axios.post('http://localhost:3001/notes', { content: newContent });
-    //         await refreshData();
-    //         setNewContent('');
-    //     } catch (error) {
-    //         console.error('Error adding note:', error);
-    //     }
-    // };
+
     const handleAddClick = async () => {
         try {
             await noteService.create(newContent);
@@ -65,14 +59,6 @@ export default function PostsTable({ notes, fetchNotes }: Page) {
         }
     };
 
-    // const handleDeleteNote = async (note: Note) => {
-    //     try {
-    //         await axios.delete(`http://localhost:3001/notes/${note.id}`);
-    //         await fetchNotes();
-    //     } catch (error) {
-    //         console.error('Error deleteing note:', error);
-    //     }
-    // };
     const handleDeleteNote = async (note: Note) => {
         try {
             await noteService.remove(note);
@@ -81,16 +67,6 @@ export default function PostsTable({ notes, fetchNotes }: Page) {
             console.error('Error deleteing note:', error);
         }
     };
-
-    // const handleEditNote = async (note: Note) => {
-    //     const updatedNote = { content: note.content };
-    //     try {
-    //         await axios.put(`http://localhost:3001/notes/${note.id}`, updatedNote);
-    //         await fetchNotes();
-    //     } catch (error) {
-    //         console.error('Error editing note:', error);
-    //     }
-    // };
 
     const handleEditNote = async (note: Note) => {
         try {
@@ -107,16 +83,17 @@ export default function PostsTable({ notes, fetchNotes }: Page) {
                     Notes Page
                 </header>
                 <div className="form-container">
-                    <CreateUser />
-                    <Login />
+                    <Login user={user} setUser={setUser} />
+                    <CreateUser user={user} />
                 </div>
+                <br></br>
                 <div className="add-button">
-                    {addButton}
+                    {user === null ?  <></> : addButton}
                 </div>
                 <div className="notes-grid">
                     {notes.map((note) => (
                         <div key={note.id.toString()}>
-                            <Post note={note} handleDeleteNote={handleDeleteNote} handleEditNote={handleEditNote} />
+                            <Post note={note} handleDeleteNote={handleDeleteNote} handleEditNote={handleEditNote} user={user} />
                         </div>
                     ))}
                 </div>

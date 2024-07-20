@@ -7,7 +7,6 @@ const authorize = require("../controllers/authorization");
 
 const { request } = require("http");
 
-
 //GET 10 notes.
 noteRouter.get("/", async (request, response) => {
   try {
@@ -29,7 +28,7 @@ noteRouter.get("/", async (request, response) => {
     response.status(500).json({ error: "Internal Server Error" });
   }
 });
- 
+
 // POST new note
 noteRouter.post("/", authorize, async (request, response) => {
   const { content } = request.body;
@@ -42,7 +41,7 @@ noteRouter.post("/", authorize, async (request, response) => {
       .status(400)
       .json({ error: "Missing or Wrong fields in the request" });
   }
- 
+
   const count = await Note.countDocuments({});
   const customId = count + 1;
   const note = new Note({
@@ -86,6 +85,7 @@ noteRouter.get("/:id", async (request, response) => {
 // DELETE the i-th Note.
 noteRouter.delete("/:id", authorize, async (request, response) => {
   const i = request.params.id;
+  const author = request.user.name;
 
   try {
     const notes = await Note.find({})
@@ -95,6 +95,11 @@ noteRouter.delete("/:id", authorize, async (request, response) => {
     const note = notes[0];
 
     if (note) {
+      if (note.author.name !== author) {
+        return response
+          .status(403)
+          .json({ error: "Forbidden: Not authorized to update this note" });
+      }
       const deletedNote = await Note.deleteOne({ _id: note._id });
       if (deletedNote) {
         response.status(204).json("Note deleted successfully");
@@ -112,6 +117,7 @@ noteRouter.delete("/:id", authorize, async (request, response) => {
 //EDIT the i-th Note.
 noteRouter.put("/:id", authorize, async (request, response) => {
   const i = request.params.id;
+  const author = request.user.name;
   const newContent = request.body.content;
 
   if (
@@ -132,6 +138,11 @@ noteRouter.put("/:id", authorize, async (request, response) => {
     const note = notes[0];
 
     if (note) {
+      if (note.author.name !== author) {
+        return response
+          .status(403)
+          .json({ error: "Forbidden: Not authorized to update this note" });
+      }
       const updatedNote = await Note.updateOne(
         { _id: note._id },
         { content: newContent }

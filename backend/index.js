@@ -31,14 +31,14 @@ app.use(cors());
 const notesRouter = require("./controllers/noteRoutes");
 const usersRouter = require("./controllers/users");
 const loginRouter = require("./controllers/login");
-const authorize = require("./controllers/authorization");
+const authorization = require("./controllers/authorization");
 
 app.use(express.json());
 app.use(requestLogger);
 app.use("/notes", notesRouter);
 app.use("/users", usersRouter);
 app.use("/login", loginRouter);
-app.use(authorize);
+app.use(authorization);
 
 
 app.use(unknownEndpoint);

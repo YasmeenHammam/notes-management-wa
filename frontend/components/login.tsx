@@ -1,11 +1,11 @@
 import noteService from "../services/noteService";
 import loginService from "../services/loginService";
 import { useState } from "react";
+import { LoginProps } from "./types";
 
-export default function Login() {
+export default function Login({ user, setUser } : LoginProps) {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
-    const [user, setUser] = useState(null)
 
     const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();

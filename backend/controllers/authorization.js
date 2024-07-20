@@ -15,25 +15,20 @@ const authorize = async (request, response, next) => {
     return response.status(401).json({ error: "Token missing" });
   }
   try {
-      const decodedToken = jwt.verify(token, process.env.SECRET);
-      console.log(decodedToken.id)
+    const decodedToken = jwt.verify(token, process.env.SECRET);
+    console.log(decodedToken.id);
     if (!decodedToken.id) {
       return response.status(401).json({ error: "Token invalid" });
     }
     try {
-        const user = await User.findById(decodedToken.id);
-        console.log(user);
-        
+      const user = await User.findById(decodedToken.id);
+      console.log(user);
+
       if (!user) {
         return response.status(401).json({ error: "User not found" });
       }
-      // else  {
-      //   return response
-      //     .status(403)
-      //     .json({ error: "Forbidden: User not authorized to post" });
-        // }
-        request.user = user;
-        next();
+      request.user = user;
+      next();
     } catch (error) {
       return response.status(500).json({ error: "Internal server error" });
     }
