@@ -42,6 +42,7 @@ export default function Post({ note, handleDeleteNote, handleEditNote, user }: P
             setContent(note.content)
         }}>Edit</button>
     }
+    const isAuthor = user && user.username === note.author.name;
     return (
         <>
             <div className="note" id={note.id.toString()}  >
@@ -51,8 +52,8 @@ export default function Post({ note, handleDeleteNote, handleEditNote, user }: P
                 <small> {note.author.email}</small>
                 <p>{noteContent}</p>
                 <div className="pagination">
-                    {user === null ? <></> : noteButton}
-                    {user === null ? <></> : <button name={`delete-${note.id}`} onClick={() => handleDeleteNote(note)} >Delete</button>}
+                    {isAuthor && noteButton}
+                    {isAuthor && <button name={`delete-${note.id}`} onClick={() => handleDeleteNote(note)} >Delete</button>}
 
                 </div>
                 <hr />

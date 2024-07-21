@@ -7,9 +7,10 @@ import PostsTable from '../components/postsTable'
 import { Note } from "../components/types";
 import ThemeToggle from '../components/theme';
 import noteService from "../services/noteService";
+import type { InferGetStaticPropsType, GetStaticProps } from 'next'
 
-
-const POSTS_PER_PAGE: number = 10
+ 
+const POSTS_PER_PAGE: number = 10;
 
 export default function Home() {
   const [currentNotes, setCurrentNotes] = useState<Note[]>([]);

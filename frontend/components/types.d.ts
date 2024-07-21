@@ -2,7 +2,7 @@ export interface PostProps {
     note: Note;
     handleDeleteNote: (note: Note) => void;
     handleEditNote: (note: Note) => void;
-    user: null
+    user: loggedUser | null
 
 }
 
@@ -45,11 +45,17 @@ export interface Credentials{
     password: string
 }
 
+interface loggedUser {
+    token: string;
+    username: string;
+    email: string;
+}
+
 export interface LoginProps{
-    user: null
+    user: loggedUser | null
     setUser: Dispatch<SetStateAction<null>>
 }
 
 export interface CreateProps{
-    user: null
+    user: loggedUser| null
 }
