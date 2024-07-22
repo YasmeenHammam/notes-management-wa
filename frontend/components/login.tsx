@@ -45,7 +45,7 @@ export default function Login({ user, setUser }: LoginProps) {
         return (
             <div className="forms-container">
                 <b>login</b>
-                <form onSubmit={handleLogin}>
+                <form name="login_form" onSubmit={handleLogin}>
                     <div>
                         Username:
                         <input className="input-login"

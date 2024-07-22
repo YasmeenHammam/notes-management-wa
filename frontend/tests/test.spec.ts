@@ -9,8 +9,8 @@ test('Check the homepage with Notes Page header', async ({ page }) => {
 
 test('Check Create User Form Visibility', async ({ page }) => {
     await page.goto('http://localhost:3000'); 
-    const formsContainer = await page.$('.forms-container');
-    expect(formsContainer).not.toBeNull();
+    const createForm = page.locator('form[name="create_user_form"]');
+    expect(createForm).not.toBeNull();
     await expect(page.locator('input[name="create_user_form_name"]')).toBeVisible();
     await expect(page.locator('input[name="create_user_form_email"]')).toBeVisible();
     await expect(page.locator('input[name="create_user_form_username"]')).toBeVisible();
@@ -20,8 +20,8 @@ test('Check Create User Form Visibility', async ({ page }) => {
 
 test('Check Login Form Visibility', async ({ page }) => {
     await page.goto('http://localhost:3000'); 
-    const formsContainer = await page.$('.forms-container');
-    expect(formsContainer).not.toBeNull();
+    const loginForm = page.locator('form[name="login_form"]');
+    expect(loginForm).not.toBeNull();
     await expect(page.locator('input[name="login_form_username"]')).toBeVisible();
     await expect(page.locator('input[name="login_form_password"]')).toBeVisible();
     await expect(page.locator('button[name="login_form_login"]')).toBeVisible();
@@ -29,8 +29,9 @@ test('Check Login Form Visibility', async ({ page }) => {
 
 test('Create User Form Check the add button Visability', async ({ page }) => {
     await page.goto('http://localhost:3000');
-    const formsContainer = await page.$('.forms-container');
-    expect(formsContainer).not.toBeNull();
+    const createForm = page.locator('form[name="create_user_form"]');
+    expect(createForm).not.toBeNull();
+    
     // filling the create user form
     await page.fill('input[name="create_user_form_name"]', 'Yasmin');
     await page.fill('input[name="create_user_form_email"]', 'Yasmin@example.com');
@@ -45,8 +46,8 @@ test('Create User Form Check the add button Visability', async ({ page }) => {
 
 test('Login and Check the add button Visability ', async ({ page }) => {
     await page.goto('http://localhost:3000');
-    const formsContainer = await page.$('.forms-container');
-    expect(formsContainer).not.toBeNull();
+    const loginForm = page.locator('form[name="login_form"]');
+    expect(loginForm).not.toBeNull();
 
     // fill the login form 
     await page.fill('input[name="login_form_username"]', 'Yasmin');

@@ -28,7 +28,7 @@ export default function CreateUser({ user } : CreateProps) {
         return (
             <div className="forms-container">
                 <b>Create User</b>
-                <form onSubmit={handleCreateUser}>
+                <form name="create_user_form" onSubmit={handleCreateUser}>
                     <div>
                         Name:
                         <input className="input-register"
