@@ -24,7 +24,6 @@ noteRouter.get("/", async (request, response) => {
 
     response.status(200).json({ count, notes });
   } catch (error) {
-    console.log(error);
     response.status(500).json({ error: "Internal Server Error" });
   }
 });

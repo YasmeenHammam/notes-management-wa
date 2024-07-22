@@ -56,4 +56,10 @@ test('Login and Check the add button Visability ', async ({ page }) => {
     //checking the add button 
     const addButton =  page.locator('button[name="add_new_note"]');
     await expect(addButton).toBeVisible();
+
+    // Log out
+    await page.click('button[name="logout"]'); 
+
+    // checking add button is not visible after logout
+    await expect(addButton).toBeHidden();
 });

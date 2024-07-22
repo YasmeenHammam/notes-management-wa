@@ -1,9 +1,9 @@
 import noteService from "../services/noteService";
 import loginService from "../services/loginService";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { LoginProps } from "./types";
 
-export default function Login({ user, setUser } : LoginProps) {
+export default function Login({ user, setUser }: LoginProps) {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
 
@@ -13,8 +13,7 @@ export default function Login({ user, setUser } : LoginProps) {
             const user = await loginService.login({
                 username, password,
             })
-            // console.log(username + " logged in ");
-            noteService.setToken(user.token)    
+            noteService.setToken(user.token)
             window.localStorage.setItem(
                 'loggedNoteappUser', JSON.stringify(user)
             )
@@ -25,8 +24,16 @@ export default function Login({ user, setUser } : LoginProps) {
         }
     }
 
+    useEffect(() => {
+        const loggedUserJSON = window.localStorage.getItem('loggedNoteappUser')
+        if (loggedUserJSON) {
+            const user = JSON.parse(loggedUserJSON);
+            setUser(user);
+            noteService.setToken(user.token);
+        }
+    }, [setUser])
+
     const handleLogout = async () => {
-        // console.log(user + "logged out ");
         setUsername('')
         setUser(null)
         noteService.setToken(null)
@@ -38,38 +45,38 @@ export default function Login({ user, setUser } : LoginProps) {
         return (
             <div className="forms-container">
                 <b>login</b>
-            <form onSubmit={handleLogin}>
-                <div>
-                    Username:
-                    <input className="input-login"
-                        type="text"
-                        value={username}
-                        name="login_form_username"
-                        onChange={({ target }) => setUsername(target.value)}
-                    />
-                </div>
-                <div>
-                    Password:
-                    <input className="input-login"
-                        type="password"
-                        value={password}
-                        name="login_form_password"
-                        onChange={({ target }) => setPassword(target.value)}
-                    />
-                </div>
-                <div className="login">
-                    <button name="login_form_login" type="submit">login</button>
-                </div>
+                <form onSubmit={handleLogin}>
+                    <div>
+                        Username:
+                        <input className="input-login"
+                            type="text"
+                            value={username}
+                            name="login_form_username"
+                            onChange={({ target }) => setUsername(target.value)}
+                        />
+                    </div>
+                    <div>
+                        Password:
+                        <input className="input-login"
+                            type="password"
+                            value={password}
+                            name="login_form_password"
+                            onChange={({ target }) => setPassword(target.value)}
+                        />
+                    </div>
+                    <div className="login">
+                        <button name="login_form_login" type="submit">login</button>
+                    </div>
                 </form>
-                </div>
+            </div>
         )
     }
     return (
         <div>
-            <p>{username} logged-in</p>
+            <b>{username} logged-in</b>
             <div className="logout">
-                <button onClick={handleLogout}>logout</button>
-                </div>
+                <button name="logout" onClick={handleLogout}>logout</button>
+            </div>
         </div>
     )
 }

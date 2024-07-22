@@ -59,3 +59,20 @@ export interface LoginProps{
 export interface CreateProps{
     user: loggedUser| null
 }
+
+export interface HomeProps {
+    initialNotes: Note[];
+    initialNumOfPages: number;
+}
+
+
+export interface PaginationProps {
+    activePage: number;
+    numOfPages: number;
+    setActivePage: React.Dispatch<React.SetStateAction<number>>;
+}
+
+export interface getRangeProps {
+    activePage: number;
+    numOfPages: number;
+}

@@ -16,14 +16,11 @@ const authorize = async (request, response, next) => {
   }
   try {
     const decodedToken = jwt.verify(token, process.env.SECRET);
-    console.log(decodedToken.id);
     if (!decodedToken.id) {
       return response.status(401).json({ error: "Token invalid" });
     }
     try {
       const user = await User.findById(decodedToken.id);
-      console.log(user);
-
       if (!user) {
         return response.status(401).json({ error: "User not found" });
       }

@@ -1,15 +1,14 @@
+import { POSTS_PER_PAGE } from '@/utils/consts'
 import { Note } from '../components/types'
 import axios from 'axios'
 
 const baseUrl = "http://localhost:3001/notes"
-const POSTS_PER_PAGE: number = 10;
 
 
 let token: string | null = null
 
 const setToken = (newToken: string | null) => {
     token = `Bearer ${newToken}`
-    // console.log(token);
 }
 
 const get = async (activePage: number) => {
