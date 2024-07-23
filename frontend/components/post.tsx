@@ -42,7 +42,7 @@ export default function Post({ note, handleDeleteNote, handleEditNote, user }: P
             setContent(note.content)
         }}>Edit</button>
     }
-    const isAuthor = user && user.username === note.author.name;
+    const isAuthor = user && user.name === note.author.name;
     return (
         <>
             <div className="note" id={note.id.toString()}  >

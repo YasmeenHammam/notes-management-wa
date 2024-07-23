@@ -47,7 +47,7 @@ export interface Credentials{
 
 interface loggedUser {
     token: string;
-    username: string;
+    name: string;
     email: string;
 }
 
